@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="canonical" href="https://alexmontgomerie.co.uk">
+    <title>Alex Montgomerie</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon"/>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <link href="../index.css" rel="stylesheet">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+  <body>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <header>
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h1>Alex Montgomerie</h1>
+          <div>
+            <a class="btn btn-primary" href="../index.html" role="button">home</a>
+            <a class="btn btn-primary" href="index.html" role="button">blog</a>
+            <a class="btn btn-primary" href="../photos.html" role="button">photos</a>
+          </div>
+        </div>
+        <p>email:<i>am9215@ic.ac.uk</i></p>
+      </div>
+    </header>
+    <main role="main" class="container">
+      <div class="row">
+        <div class="col-md-8 blog-main">
+          <div class="blog-post">
+            <h2 class="blog-post-title">The Hidden Environmental Cost of Machine Learning</h2>
+            <p class="blog-post-meta">3rd September 2021</p>
+            <hr>
+            <div class="text-justify">
+              <p>I believe that for researchers, it is important for us to be aware of what the impact of our work is outside of just it's research value. We should be aware of what the wider impact of it is on society as well as the cost incurred in carrying out this research. For the discipline of Machine Learning (ML), we are often told to think about the ethical implications of our work. However one aspect which I think is often overlooked is the environmental impact. For those of us who are
+              lucky enough to have access to powerful servers, we forget that this computational capacity is driven by real energy which does not necessarily come from a sustainable source. And so the natural question is what is the environmental impact of machine learning, and is it worth it? This is the question that myself, along with Diedrick Vink and Aditya Rajagopal explored in a discussion session we held at the IEEE conference on <em>Advances in Communications, Devices and Systems (ACDS),
+                  2021</em>. A copy of the slides from the presentation can be found <a href="../publications/ACDS2021_presentation.pdf">here</a>.</p>
+              <h3>Background</h3>
+              <p>To answer this question, let's start with some background. The process of deploying a deep learning model has two stages: <b>training</b> and <b>inference</b>. At the training stage, you take a black-box model and update the parameters inside the model to improve the accuracy for a given task. To update these parameters, this is usually done by iterating over a large dataset of example inputs and outputs, and propagating the errors in the models output and expected output
+              backwards, such that the accuracy is improved. This process can take extremely long (many weeks) to run on un-optimized hardware such as a CPU, so what is common is to use GPU or other specialized hardware in parallel to speed up the training. Once a model is trained, then it's deployed to perform inference for it's given task. This stage is typically run in a database, using similar hardware to what it's trained on.</p>
+              <h3>Training</h3>
+              <p>Let's start by looking at the environmental impact of the training side. This can be thought of as a one time cost, however what ML companies will typically do is retrain their models as their datasets grow. Patterson et al. [1], who work on Google's ML computing platform, have given some insight into how much energy is needed to train new ML models. Modern neural networks are becoming increasingly large as their accuracy is improving as well as the hardware to train them on
+              improves. This means that there are now in the order of billions in parameters for networks such as GPT-3. In order to train these massive networks, the common process used requires three stages: Network Architecture Search (NAS), prototyping, and final training. The NAS stage is when the model architecture is generated by trying out different networks in a given design space and getting their accuracy. Once an architecture is found, the hyperparameters are optimized
+              during the prototyping stage. Finally, the network is trained to achieve it's best accuracy. You can imagine that the first two stages on their own can require a significant amount of energy, as the network is trained multiple times. Infact, Strubell et al. [2] estimate that performing the whole training pipeline for GPT-3 can be equivalent to the lifetime of 5 cars, in terms of CO2 emissions. The Google paper argues that the true datacenter efficiency as well as hardware
+              efficiency can dramatically reduce this estimate however. In their paper, they focused on the final retraining step, and gave CO2e estimates for their application case. What they found was that doing the final training run for GPT-3 takes roughly 550 tonnes of CO2, which is equivalent to a plane flying back and forth between San Francisco and New York 3 times. However they suggest that using their hardware (Tensor Processing Units) in their datacenters, a similar model T5
+              uses the equivalent of 45 tonnes of CO2.</p>
+              <h3>Inference</h3>
+              <p>These staggering numbers for training put into perspective how much CO2 we are actually using to create these models. And the figures given are just for one company running these networks, however there are many companies and universities researching and retraining ML models everyday. More importantly, these models are being used everyday as well; training is one aspect, however what is the impact once we have the network up and running? To try to answer this
+              question, let's look at an example of an ML application: <a href="https://translate.google.co.uk/">Google Translate</a>.</p>
+              <p>Google Translate is a popular service for translating text between several different languages. To do this, they use the GNMT model, which is a type of Long-Term Short-Term (LSTM) network used for automated translation. Google have stated in a <a href="https://blog.google/products/translate/ten-years-of-google-translate/">blog post</a> that around 500 million people use Google Translate worldwide, and that they handle around 100 billion words a day. We also have an idea of
+              the sort of hardware Google use, as they have published and even offer their Tensor Processing Unit (TPU) hardware for deploying ML networks. Using this knowledge, we can estimate the usage of this ML model, but how do we relate this to CO2 emissions? Well to do so I proposed the following model for power consumption at the ACDS conference:</p>
+              <p>\[ P_{total} = N_{TPU} \cdot \left( \frac{T_{req}}{T_{TPU}\cdot N_{TPU}} \cdot P_{TPU}^{busy} + \left( 1 - \frac{T_{req}}{T_{TPU}\cdot N_{TPU}} \right) \cdot P_{TPU}^{idle} \right) \cdot PUE \]</p>
+              <p>In this model, we have the following parameters:</p>
+              <p>
+                <ul>
+                  <li>\( N_{TPU}\): The number of processors (TPUs) in the datacenter</li>
+                  <li>\( T_{req}\): The frequency of inference requests per second</li>
+                  <li>\( T_{TPU}\): The throughput a single TPU can handle</li>
+                  <li>\( P_{TPU}^{busy}\): The power consumed per TPU whilst it's processing the model</li>
+                  <li>\( P_{TPU}^{idle}\): The power consumed per TPU whilst it's idle</li>
+                  <li>\( PUE\): The power efficiency of the datacenter</li>
+                </ul>
+              </p>
+              <p>From what we have found out about Google Translate, we can populate some of the parameters of the model in the table below. The main question is how many TPUs do Google use to perform inference?</p>
+              <table class="table text-center table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col">Parameter</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>\( T_{req}\)</td>
+                    <td>queries/s</td>
+                    <td>1,200,000</td>
+                  </tr>
+                  <tr>
+                    <td>\( T_{TPU}\)</td>
+                    <td>queries/s</td>
+                    <td>175</td>
+                  </tr>
+                  <tr>
+                    <td>\( P_{TPU}^{busy}\)</td>
+                    <td>W</td>
+                    <td>96</td>
+                  </tr>
+                  <tr>
+                    <td>\( P_{TPU}^{idle}\)</td>
+                    <td>W</td>
+                    <td>72.5</td>
+                  </tr>
+                  <tr>
+                    <td>\( PUE\)*</td>
+                    <td>N/A</td>
+                    <td>1.1</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p><small><em>* Google publish their datacenter Power Usage Effectiveness (PUE) in <a href="https://www.gstatic.com/gumdrop/sustainability/google-2020-environmental-report.pdf">sustainability reports</a>.</em></small></p>
+              <p>To produce an estimate for the CO2 emissions of Google Translate, we have to first estimate how many TPUs are actually used. To do this, we must first understand that the workload is not going to be constant. Google quote the average number of queries a day, but at any given moment they may be handling 10 times more or 10 times less than that. Therefore, they must build in some redundancy in order to be able to serve their users. It is worth noting that one way of handling
+              this is through virtualisation, where a computing unit can be running a varied number of tasks at any given time. However TPU hardware is very specialised and is unlikely to support virtualisation. We will look at both an efficient and inefficient datacenter setup to get an idea of the range in environmental impact inference may have.</p>
+              <table class="table text-center table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Efficient</th>
+                    <th scope="col">Redundant</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="col">No. TPUs</th>
+                    <td>7000</td>
+                    <td>10000</td>
+                  </tr>
+                  <tr>
+                    <th scope="col">Efficiency (%)</th>
+                    <td>98</td>
+                    <td>7</td>
+                  </tr>
+                  <tr>
+                    <th scope="col">Energy per Year (MWh)</th>
+                    <td>5780</td>
+                    <td>71000</td>
+                  </tr>
+                  <tr>
+                    <th scope="col">CO2e (tonnes)</th>
+                    <td>4100</td>
+                    <td>50000</td>
+                  </tr>
+                  <tr>
+                    <th scope="col">Average Human per Year (CO2e)</th>
+                    <td>820</td>
+                    <td>10000</td>
+                  </tr>
+                  <tr>
+                    <th scope="col">Lifetime of a Car (CO2e)</th>
+                    <td>72</td>
+                    <td>880</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>We can see that the impact of inference is potentially a lot larger than training, with orders of magnitude more CO2e, and only for a single year. However, there are some interesting discussions to be had from these results. For instance, I estimate the CO2e for Google Translate to be equivalent to between 1000 and 10000 people. This is a lot, but imagine 10000 people trying to handle 500 million peoples translation requests everyday. For this application in particular, I do see
+              the benefit we are getting from this service, and although this service impacts the planet, it is a lot less significant than a human-based alternative.</p>
+              <p>But this is one example, and there are many machine learning applications out there with different impacts on both society and the environment. This example only touches the surface. Amazon Web Services (AWS), who own roughly half of all datacenters worldwide, report that <a href="https://aws.amazon.com/blogs/aws/amazon-ec2-update-inf1-instances-with-aws-inferentia-chips-for-high-performance-cost-effective-inferencing/">90%</a> of their ML computing
+              platforms are used for inference. The estimates I have done account for only a small fraction of the impact of ML inference in total.</p>
+              <h3>Conclusion</h3>
+              <p>All in all, it's quite evident that we cannot ignore the impact ML has on the environment, particularly considering how prominent it will be in the future of computing. All of us, even PhD students, should at least consider the environmental impact of our work and think about ways to reduce it. What is definitely more important though, is for ML companies to be more transparent about this aspect of their work. We are all in the dark in terms of what datacenters and
+              particularly ML applications are doing to the environment, and so cannot weigh up this with the social benefits they may have. And to try and reduce the impact of ML, we should look towards the inference side, as this is where the majority of the energy is consumed. This is a great motivation for me to continue looking into the Low-Power side of ML acceleration, as there can be positive real-world outcomes from research in this area.</p>
+              <p><em>Alexander Montgomerie-Corcoran, 3rd September 2021</em></p>
+              <hr>
+              <table class="text-justify">
+                <tr valign="top">
+                  <td align="right" class="bibtexnumber">
+                    [<a name="8977845">1</a>]
+                    </td>
+                    <td class=" bibtexitem">
+                    David A. Patterson, Joseph Gonzalez, Quoc V. Le, Chen Liang, Lluis-Miquel Munguia, Daniel Rothchild, David R. So, Maud Texier &amp; Jeff Dean. Carbon Emissions and Large Neural Network Training, Apr 2021.
+                  </td>
+                </tr>
+                <tr valign="top">
+                  <td align="right" class="bibtexnumber">
+                    [<a name="8977845">2</a>]
+                    </td>
+                    <td class=" bibtexitem">
+                    Emma Strubell, Ananya Ganesh &amp; Andrew McCallum. Energy and Policy Considerations for Deep Learning in NLP, Jun 2019.
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="container">
+        <p>
+          <a href="https://github.com/AlexMontgomerie"><i data-feather="github"></i></a>
+          <a href="https://www.linkedin.com/in/alexmontgomerie"><i data-feather="linkedin"></i></a>
+          <a href="https://www.instagram.com/alex_montgomerie"><i data-feather="instagram"></i></a>
+          <a href="https://twitter.com/AlexMontgomerie"><i data-feather="twitter"></i></a>
+          <a href="mailto:am9215@ic.ac.uk"><i data-feather="mail"></i></a>
+        </p>
+      </div>
+    </footer>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+  </body>
+</html>

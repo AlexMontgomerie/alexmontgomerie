@@ -24,6 +24,7 @@
           <h1>Alex Montgomerie</h1>
 		  <div>
 		    <a class="btn btn-primary" href="index.html" role="button">home</a>
+		    <a class="btn btn-primary" href="blog/index.html" role="button">blog</a>
 		    <a class="btn btn-primary" href="photos.html" role="button">photos</a>
 		  </div>
 		</div>
@@ -34,8 +35,8 @@
       <div class="container">
         <div class="row d-inline-block">
 		  <img src="images/me.jpg" class="profile-picture" />
-          <p class="lead">I am a PhD Student at Imperial College London under the supervision of <a href="https://www.imperial.ac.uk/people/christos-savvas.bouganis">Dr. Christos-Savvas Bouganis</a>. I am part of both the Circuits and Systems (<a href="https://www.imperial.ac.uk/electrical-engineering/research/circuits-and-systems/">CAS</a>) group, the Intelligent Digital Systems Lab (<a href="https://www.imperial.ac.uk/intelligent-digital-systems/">iDSL</a>) at Imperial College London, as well as the International Centre for Spatial Computational Learning (<a href="https://spatialml.net/">SpatialML</a>).</p>
-		  <p class="lead">My research focus is on Low-Power Machine Learning acceleration. I am exploring techniques which explictly target power reduction for Machine Learning applications. I am interested in novel coding and compression techniques for this domain.</p>
+          <p class="text-justify lead">I am a PhD Student at Imperial College London under the supervision of <a href="https://www.imperial.ac.uk/people/christos-savvas.bouganis">Dr. Christos-Savvas Bouganis</a>. I am part of both the Circuits and Systems (<a href="https://www.imperial.ac.uk/electrical-engineering/research/circuits-and-systems/">CAS</a>) group, the Intelligent Digital Systems Lab (<a href="https://www.imperial.ac.uk/intelligent-digital-systems/">iDSL</a>) at Imperial College London, as well as the International Centre for Spatial Computational Learning (<a href="https://spatialml.net/">SpatialML</a>).</p>
+		  <p class="text-justify lead">My research focus is on Low-Power Machine Learning acceleration. I am exploring techniques which explictly target power reduction for Machine Learning applications. I am interested in novel coding and compression techniques for this domain. I am also working on an efficient framework for Convolutional Neural Network acceleration on FPGA devices.</p>
 		  <!--<p class="lead">Please feel free to contact me!</p>-->
         </div>
         <div class="row">
@@ -44,7 +45,6 @@
             <li class="list-group-item">
               <a href="https://github.com/AlexMontgomerie/rle-chisel"><strong>RLE(chisel):</strong></a> Run-Length Encoder implemented in Chisel.
             </li>
-
             <li class="list-group-item">
               <a href="https://github.com/AlexMontgomerie/pommel"><strong>POMMEL:</strong></a> Tool for estimating power and energy consumption of the memory subsystem in CNN Accelerators.
             </li>
@@ -65,31 +65,48 @@
         <div class="row">
           <h2>Publications</h2>
           <!-- use bibtext2html tmp.bib -->
-          <table>
+          <table class="text-justify">
             <tr valign="top">
               <td align="right" class="bibtexnumber">
                 [<a name="8977845">1</a>]
                 </td>
-                <td class="bibtexitem">
-                A.&nbsp;Montgomerie-Corcoran and C.&nbsp;Bouganis.
-                 DEF: Differential Encoding of Featuremaps for Low Power Convolutional Neural Network Accelerators
-                 In <em>2021 26th Asia and South Pacific Design Automation Conference (ASP-DAC)</em>, Jan 2021.
-				[<a href="publications/ASPDAC2021_paper.pdf">pdf</a>,<a href="publications/ASPDAC2021_presentation.pdf">slides</a>]
+                <td class=" bibtexitem">
+                <b>A.&nbsp;Montgomerie-Corcoran</b> and C.&nbsp;Bouganis.
+                POMMEL: Exploring Off-Chip Memory Energy &amp; Power Consumption in Convolutional Neural Network Accelerators
+                In <em>2021 24th Euromicro Conference on Digital System Design (DSD)</em>, Sep 2021.
+				[<a href="publications/DSD2021_paper.pdf">pdf</a>,<a href="publications/DSD2021_presentation.pdf">slides</a>]
               </td>
             </tr>
-            <tr valign="top">
+	        <tr valign="top">
               <td align="right" class="bibtexnumber">
                 [<a name="8977845">2</a>]
                 </td>
                 <td class="bibtexitem">
-                A.&nbsp;Montgomerie-Corcoran, S.&nbsp;I. Venieris, and C.&nbsp;Bouganis.
-                 Power-aware FPGA mapping of convolutional neural networks.
-                 In <em>2019 International Conference on Field-Programmable
-                  Technology (ICFPT)</em>, Dec 2019.
+                <b>A.&nbsp;Montgomerie-Corcoran</b> and C.&nbsp;Bouganis.
+                DEF: Differential Encoding of Featuremaps for Low Power Convolutional Neural Network Accelerators
+                In <em>2021 26th Asia and South Pacific Design Automation Conference (ASP-DAC)</em>, Jan 2021.
+				[<a href="https://dl.acm.org/doi/10.1145/3394885.3431576">link</a>,<a href="publications/ASPDAC2021_paper.pdf">pdf</a>,<a href="publications/ASPDAC2021_presentation.pdf">slides</a>]
+              </td>
+            </tr>
+            <tr valign="top">
+              <td align="right" class="bibtexnumber">
+                [<a name="8977845">3</a>]
+                </td>
+                <td class="bibtexitem">
+                <b>A.&nbsp;Montgomerie-Corcoran</b>, S.&nbsp;I. Venieris, and C.&nbsp;Bouganis.
+                Power-aware FPGA mapping of convolutional neural networks.
+                In <em>2019 International Conference on Field-Programmable
+                Technology (ICFPT)</em>, Dec 2019.
                 [<a href="http://dx.doi.org/10.1109/ICFPT47387.2019.00059">link</a>,<a href="publications/FPT2019_paper.pdf">pdf</a>,<a href="publications/FPT2019_poster.pdf">poster</a>]
               </td>
             </tr>
           </table>
+        </div>
+        <div class="row">
+          <h2>Other Publications &amp; Presentations</h2>
+          <ul style="margin-top: 10px" class="text-justify list-group">
+              <li><b>A. Montgomerie-Corcoran</b>, D. Vink and A. Rajagopal. The Hidden Environmental Cost of Machine Learning In <em>2021 IEEE Conference on Advances in Communications, Devices and Systems (ACDS)</em>, Sep 2021</li>
+          </ul>
         </div>
       </div>
     </main>
